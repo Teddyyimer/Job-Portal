@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal | Find Your Next Job</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #1f2937;
+            background: #f5f7fb;
+        }
+
+        header {
+            background: #173b68;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 65px 20px;
+            background: #e7effb;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            max-width: 650px;
+            margin: 25px auto 0;
+        }
+
+        .search-form input {
+            flex: 1;
+            min-width: 0;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 13px 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .jobs-section {
+            max-width: 900px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .job-card {
+            background: white;
+            padding: 22px;
+            margin: 16px 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .job-card h3 {
+            margin-top: 0;
+            color: #173b68;
+        }
+
+        .job-meta {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        .apply-link {
+            display: inline-block;
+            margin-top: 8px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 18px;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            nav a {
+                margin-left: 0;
+                margin-right: 12px;
+            }
+
+            .hero h1 {
+                font-size: 29px;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>JobPortal</h2>
+        <nav>
+            <a href="/">Home</a>
+            <a href="#jobs">Find Jobs</a>
+            <a href="#about">About</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Find Your Next Opportunity</h1>
+        <p>Discover jobs and take the next step in your career.</p>
+
+        <form class="search-form" action="/" method="get">
+            <input
+                type="text"
+                name="q"
+                placeholder="Job title or keyword"
+                aria-label="Job title or keyword"
+            >
+            <button type="submit">Search Jobs</button>
+        </form>
+    </section>
+
+    
+<section class="jobs-section" id="jobs">
+    <h2>Latest Jobs</h2>
+
+    {% for job in jobs %}
+        <article class="job-card">
+            <h3>{{ job.title }}</h3>
+
+            <p class="job-meta">
+                Company: {{ job.company }}<br>
+                Location: {{ job.location }}<br>
+                Type: {{ job.job_type }}
+            </p>
+
+            {% if job.salary %}
+                <p>Salary: {{ job.salary }}</p>
+            {% endif %}
+
+            <p>{{ job.description|truncatewords:25 }}</p>
+        </article>
+    {% empty %}
+        <p>No jobs are available yet. Please check back later.</p>
+    {% endfor %}
+</section>
+
+    <footer id="about">
+        <p>JobPortal — Connecting people with opportunities.</p>
+    </footer>
+
+</body>
+</html>
