@@ -146,41 +146,61 @@
         <h1>Find Your Next Opportunity</h1>
         <p>Discover jobs and take the next step in your career.</p>
 
-        <form class="search-form" action="/" method="get">
+        
+        <form class="search-form" action="{% url 'home' %}" method="get">
             <input
                 type="text"
                 name="q"
-                placeholder="Job title or keyword"
-                aria-label="Job title or keyword"
+                value="{{ query }}"
+                placeholder="Job title, company, or location"
+                aria-label="Search jobs"
             >
             <button type="submit">Search Jobs</button>
         </form>
+
     </section>
 
     
-<section class="jobs-section" id="jobs">
-    <h2>Latest Jobs</h2>
 
-    {% for job in jobs %}
-        <article class="job-card">
-            <h3>{{ job.title }}</h3>
-
-            <p class="job-meta">
-                Company: {{ job.company }}<br>
-                Location: {{ job.location }}<br>
-                Type: {{ job.job_type }}
-            </p>
-
-            {% if job.salary %}
-                <p>Salary: {{ job.salary }}</p>
+    <section class="jobs-section" id="jobs">
+        <h2>
+            {% if query %}
+                Search Results for "{{ query }}"
+            {% else %}
+                Latest Jobs
             {% endif %}
+        </h2>
 
-            <p>{{ job.description|truncatewords:25 }}</p>
-        </article>
-    {% empty %}
-        <p>No jobs are available yet. Please check back later.</p>
-    {% endfor %}
-</section>
+        {% for job in jobs %}
+            <article class="job-card">
+                <h3>
+                    <a href="{% url 'job_detail' job.id %}">
+                        {{ job.title }}
+                    </a>
+                </h3>
+
+                <p class="job-meta">
+                    Company: {{ job.company }}<br>
+                    Location: {{ job.location }}<br>
+                    Type: {{ job.job_type }}
+                </p>
+
+                {% if job.salary %}
+                    <p>Salary: {{ job.salary }}</p>
+                {% endif %}
+
+                <p>{{ job.description|truncatewords:25 }}</p>
+
+                <a class="apply-link"
+                href="{% url 'job_detail' job.id %}">
+                    View Details →
+                </a>
+            </article>
+        {% empty %}
+            <p>No jobs found. Try another search term.</p>
+        {% endfor %}
+    </section>
+
 
     <footer id="about">
         <p>JobPortal — Connecting people with opportunities.</p>

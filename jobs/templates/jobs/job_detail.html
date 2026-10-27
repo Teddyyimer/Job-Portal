@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ job.title }} | JobPortal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #1f2937;
+            background: #f5f7fb;
+        }
+
+        header {
+            background: #173b68;
+            color: white;
+            padding: 20px 8%;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .job-detail {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .job-meta {
+            color: #64748b;
+            line-height: 1.8;
+        }
+
+        .description {
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .apply-button {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2><a href="{% url 'home' %}">JobPortal</a></h2>
+    </header>
+
+    <main>
+        <a class="back-link" href="{% url 'home' %}">
+            ← Back to Jobs
+        </a>
+
+        <article class="job-detail">
+            <h1>{{ job.title }}</h1>
+
+            <p class="job-meta">
+                Company: {{ job.company }}<br>
+                Location: {{ job.location }}<br>
+                Job Type: {{ job.job_type }}<br>
+
+                {% if job.salary %}
+                    Salary: {{ job.salary }}
+                {% else %}
+                    Salary: Not specified
+                {% endif %}
+            </p>
+
+            <hr>
+
+            <h2>Job Description</h2>
+
+            <div class="description">{{ job.description }}</div>
+
+            <p>
+                <a class="apply-button" href="#apply">
+                    Apply for this Job
+                </a>
+            </p>
+
+            <p id="apply">
+                Online applications will be available in a future lesson.
+            </p>
+        </article>
+    </main>
+
+</body>
+</html>
