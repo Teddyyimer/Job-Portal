@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | Job Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .form-container {
+            max-width: 450px;
+            margin: auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px #00000012;
+        }
+
+        h1 { color: #173b70; }
+
+        input {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0 12px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #1769e0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .helptext { font-size: 13px; color: #555; }
+        .errorlist { color: #c62828; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Create your account</h1>
+        <p>Join our Job Portal today.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already have an account?
+            <a href="{% url 'login' %}">Log in</a>
+        </p>
+
+        <p><a href="{% url 'home' %}">Back to home</a></p>
+    </div>
+</body>
+</html>

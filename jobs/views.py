@@ -1,7 +1,11 @@
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from .models import Job
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+
+
 
 
 def home(request):
@@ -32,3 +36,17 @@ def job_detail(request, job_id):
         'jobs/job_detail.html',
         {'job': job},
     )
+## user registration section
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'jobs/register.html', {'form': form})
