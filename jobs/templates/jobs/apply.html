@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for {{ job.title }} | Job Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px #00000012;
+        }
+
+        h1 { color: #173b70; }
+
+        textarea {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            min-height: 180px;
+            font: inherit;
+        }
+
+        button {
+            background: #1769e0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+            cursor: pointer;
+        }
+
+        .errorlist { color: #c62828; }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>Apply for {{ job.title }}</h1>
+        <p><strong>Company:</strong> {{ job.company }}</p>
+        <p><strong>Location:</strong> {{ job.location }}</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Application</button>
+        </form>
+
+        <p>
+            <a href="{% url 'job_detail' job.id %}">
+                Cancel and return to job details
+            </a>
+        </p>
+    </main>
+</body>
+</html>

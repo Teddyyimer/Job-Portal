@@ -68,9 +68,22 @@
             text-decoration: none;
             border-radius: 6px;
         }
+        .notice {
+        padding: 12px;
+        background: #e8f5e9;
+        color: #216e39;
+        border-radius: 5px;
+       }
+        
     </style>
 </head>
 <body>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <p class="notice">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
 
     <header>
         <h2><a href="{% url 'home' %}">JobPortal</a></h2>
@@ -102,11 +115,19 @@
 
             <div class="description">{{ job.description }}</div>
 
-            <p>
-                <a class="apply-button" href="#apply">
+            
+            {% if user.is_authenticated %}
+                <a href="{% url 'apply_to_job' job.id %}">
                     Apply for this Job
                 </a>
-            </p>
+            {% else %}
+                <p>
+                    <a href="{% url 'login' %}?next={% url 'apply_to_job' job.id %}">
+                        Log in to apply
+                    </a>
+                </p>
+            {% endif %}
+
 
             <p id="apply">
                 Online applications will be available in a future lesson.

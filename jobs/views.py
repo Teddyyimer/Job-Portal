@@ -4,6 +4,11 @@ from django.db.models import Q
 from .models import Job
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .forms import ApplicationForm
+from .models import Application
+
 
 
 
@@ -50,3 +55,44 @@ def register(request):
         form = UserCreationForm()
 
     return render(request, 'jobs/register.html', {'form': form})
+
+##Job application section
+
+@login_required(login_url='login')
+def apply_to_job(request, job_id):
+    job = get_object_or_404(Job, id=job_id)
+
+    existing_application = Application.objects.filter(
+        job=job,
+        applicant=request.user
+    ).exists()
+
+    if existing_application:
+        messages.info(
+            request,
+            'You have already applied for this job.'
+        )
+        return redirect('job_detail', job_id=job.id)
+
+    if request.method == 'POST':
+        form = ApplicationForm(request.POST)
+
+        if form.is_valid():
+            application = form.save(commit=False)
+            application.job = job
+            application.applicant = request.user
+            application.save()
+
+            messages.success(
+                request,
+                'Your application was submitted successfully!'
+            )
+            return redirect('job_detail', job_id=job.id)
+    else:
+        form = ApplicationForm()
+
+    return render(
+        request,
+        'jobs/apply.html',
+        {'form': form, 'job': job}
+    )
