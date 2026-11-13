@@ -143,7 +143,7 @@
 
             {% if user.is_authenticated %}
                 <span>Welcome, {{ user.username }}!</span>
-
+                <a href="{% url 'my_applications' %}">My Applications</a>
                 <form method="post" action="{% url 'logout' %}"
                     style="display: inline;">
                     {% csrf_token %}

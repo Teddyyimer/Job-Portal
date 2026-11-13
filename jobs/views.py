@@ -96,3 +96,17 @@ def apply_to_job(request, job_id):
         'jobs/apply.html',
         {'form': form, 'job': job}
     )
+
+#my applications section
+
+@login_required(login_url='login')
+def my_applications(request):
+    applications = Application.objects.filter(
+        applicant=request.user
+    ).select_related('job')
+
+    return render(
+        request,
+        'jobs/my_applications.html',
+        {'applications': applications}
+    )

@@ -19,4 +19,9 @@ urlpatterns = [
         auth_views.LogoutView.as_view(),
         name='logout',
     ),
+    path(
+    'my-applications/',
+    views.my_applications,
+    name='my_applications',
+   ),
 ]

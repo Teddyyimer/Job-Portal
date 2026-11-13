@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications | Job Portal</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #173b70;
+        }
+
+        .application-card {
+            background: white;
+            padding: 22px;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #fff3cd;
+            color: #856404;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .accepted {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .reviewed {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .job-link {
+            color: #1769e0;
+            text-decoration: none;
+        }
+
+        .empty {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <h1>My Applications</h1>
+        <p>Track the jobs you have applied for.</p>
+
+        <p>
+            <a href="{% url 'home' %}">← Back to Home</a>
+        </p>
+
+        {% for application in applications %}
+            <article class="application-card">
+                <h2>
+                    <a class="job-link"
+                       href="{% url 'job_detail' application.job.id %}">
+                        {{ application.job.title }}
+                    </a>
+                </h2>
+
+                <p>
+                    <strong>Company:</strong>
+                    {{ application.job.company }}
+                </p>
+
+                <p>
+                    <strong>Location:</strong>
+                    {{ application.job.location }}
+                </p>
+
+                <p>
+                    <strong>Applied on:</strong>
+                    {{ application.created_at|date:"M d, Y" }}
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    <span class="status {{ application.status }}">
+                        {{ application.get_status_display }}
+                    </span>
+                </p>
+            </article>
+
+        {% empty %}
+            <div class="empty">
+                <h2>No applications yet</h2>
+                <p>You haven't applied for any jobs.</p>
+                <a href="{% url 'home' %}">Browse available jobs</a>
+            </div>
+        {% endfor %}
+    </main>
+</body>
+</html>
